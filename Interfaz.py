@@ -23,16 +23,6 @@ def ventanaGasesIdeales():
 		ventana1.resizable(width=False,height=False)
 		ventana1.title('Cálculo')
 		
-		# Define el widget Text 'self.etiqueta ' en el que se
-		# pueden introducir varias líneas de texto:
-		
-		ventana1.etiqueta = Text(ventana1, width=40, height=10)
-		
-		# Sitúa la caja de texto 'self.etiqueta' en la parte
-		# superior de la ventana 'self.ventana':
-		
-		ventana1.etiqueta.pack(side=TOP)
-		
 		# Define el widget Button 'self.bcalcular' que llamará 
 		# al metodo 'self.verinfo' cuando sea presionado
 		ventana1.lpresion = Label(ventana1, text = "Presión: ").place(x=100, y=30)
