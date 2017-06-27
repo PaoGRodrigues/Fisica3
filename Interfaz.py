@@ -1,7 +1,7 @@
 #Librerias importadas
 from GasesIdeales import *
 from GraficadorIsotermas import *
-#import os
+from PrimerPrincipio import *
 
 from tkinter import *
 from tkinter import ttk
@@ -22,6 +22,7 @@ def ventanaGasesIdeales():
 		
 		ventana1.resizable(width=False,height=False)
 		ventana1.title('Cálculo')
+		
 		
 		# Define el widget Button 'self.bcalcular' que llamará 
 		# al metodo 'self.verinfo' cuando sea presionado
@@ -105,16 +106,54 @@ def ventanaIsotermas():
 		vtemperatura3 = IntVar()
 		ventana2.etemperatura3 = Entry(ventana2, textvariable = vtemperatura3).place(x=200, y=90)
 
-		print(vtemperatura1.get())
-		print(vtemperatura2.get())
-		print(vtemperatura3.get())
-		print(vvolumen.get())
-		####################################################################
+	####################################################################
 		ventana2.bcalcular = ttk.Button(ventana2, text='Graficar Isotermas', 
 								command=lambda: graficar(vvolumen.get(), 1, vtemperatura1.get(),vtemperatura2.get(),vtemperatura3.get()))
 
 		ventana2.bcalcular.pack(side=LEFT)
 		ventana2.mainloop()
+
+###################################################################
+
+def ventanaPP():
+		
+		ventana3 = Toplevel()
+		ventana3.geometry('500x300')
+		
+		ventana3.resizable(width=True,height=True)
+		ventana3.title('Isotermas')	
+	
+		###################################################################
+		ventana3.lenergia = Label(ventana3, text = "Energía Interna: ").place(x=100, y=30)
+		venergia = IntVar()
+		ventana3.eenergia = Entry(ventana3, textvariable = venergia).place(x=200, y=30)
+
+		ventana3.ltrabajo = Label(ventana3, text = "Trabajo: ").place(x=100, y=60)
+		vtrabajo = IntVar()
+		ventana3.etrabajo = Entry(ventana3, textvariable = vtrabajo).place(x=200, y=60)
+
+		ventana3.lcalor = Label(ventana3, text = "Calor: ").place(x=100, y=90)
+		vcalor = IntVar()
+		ventana3.ecalor = Entry(ventana3, textvariable = vcalor).place(x=200, y=90)
+
+	####################################################################
+		ventana3.bcalcular = ttk.Button(ventana3, text='Graficar Isotermas', 
+								command=lambda: calcularFormula(venergia.get(),vcalor.get(),vtrabajo.get()))
+
+		ventana3.bcalcular.pack(side=LEFT)
+		ventana3.mainloop()
+
+##EVENTO del boton CALCULAR del Primer Princ ########################################
+def calcularFormula(U, Q, W):
+	result = formula(U,Q,W)
+	if(result == '-1'):
+		print("No se puede imprimir")
+	else:
+		toplevel = Toplevel()
+		toplevel.geometry('600x310')
+		label1 = Label(toplevel, text = "Resultado: {0}".format(result)).place(x=25, y=25)
+		return result
+
 
 class Aplicacion():
 
@@ -124,19 +163,22 @@ class Aplicacion():
 		
 		self.raiz.resizable(width=True,height=True)
 		self.raiz.title('Bienvenido')	
-		
-		#self.raiz.boton_gi = ttk.
+
+		####################################################################
 		self.raiz.boton_gi = ttk.Button(self.raiz, text='Calcular Gases Ideales', 
-								command=lambda:ventanaGasesIdeales()).place(x=150, y=200)
+								command=lambda:ventanaGasesIdeales()).place(x=50, y=50)
+		#self.raiz.boton_gi.grid(row=3,column=2)
 
-		#self.raiz.boton_gi.pack(side=LEFT)
-
-		#self.raiz.boton_isot = ttk.
 		self.raiz.boton_isot = ttk.Button(self.raiz, text='Graficar Isotermas', 
-								command=lambda: ventanaIsotermas()).place(x=150, y=300)
+								command=lambda: ventanaIsotermas()).place(x=50, y=150)
+		#self.raiz.boton_isot.grid(row=4,column=2)
 
-		#self.raiz.boton_isot.pack(side=RIGHT)
 
+		self.raiz.boton_pp = ttk.Button(self.raiz, text='Primer Principio de Termodinámica', 
+								command=lambda: ventanaPP()).place(x=50, y=300)
+		#self.raiz.boton_pp.grid(row=6,column=2)
+
+		####################################################################
 			# Mostrar la ventana
 		self.raiz.mainloop()		
 
@@ -146,3 +188,4 @@ def main():
 	return 0
 
 main()
+
