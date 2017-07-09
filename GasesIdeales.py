@@ -5,39 +5,26 @@ num_Avogadro = 6.022e23
 ########
 ### Ecuacion de los gases ideales
 ########
-def gases_ideales(presion, volumen, moles, temperatura):
-
-	resultado = []
-	operandos = {'Presion': presion, 'Volumen': volumen, 'Moles': moles, 'Temperatura': temperatura}
-
-	oper_values = (list(operandos.values()))
-	if(oper_values.count(0) <=2):
-		
-		##### PV = nRT
-		if(presion==0):
-			resultado = ["Presion", round((operandos['Moles']*const_gases[0]*operandos['Temperatura'])/operandos['Volumen'], 3), "atm"]
-		elif(volumen==0):
-			resultado = ["Volúmen", round((operandos['Moles']*const_gases[0]*operandos['Temperatura'])/operandos['Presion'], 3), "litros"]
-		elif(moles==0):
-			resultado = ["Moles", round((operandos['Presion']*operandos['Volumen'])/(const_gases[0]*operandos['Temperatura']), 3), "moles"]
-		else:
-			resultado = ["Temperatura", round((operandos['Presion']*operandos['Volumen'])/(const_gases[0]*operandos['Moles']), 3), "kelvin"]
-	else:
-		resultado = '-1'
+def presion(volumen, moles, temperatura):
+	if(temperatura>=0 and volumen != 0):
+		resultado = ["Presion", round((moles*const_gases[0]*temperatura)/volumen, 3), "atm"]
 
 	return resultado
 
-########
-### Crear diccionario.
-########
-def crear_dic(listaKeys, listaValues):
+def moles(volumen, presion, temperatura):
+	if(temperatura!= 0):
+		resultado = ["Moles", round((presion*volumen)/(const_gases[0]*temperatura), 3), "moles"]
 	
-	return(dic(zip(listaKeys,listaValues)))
+	return resultado
 
-def values_null(Dic, func):
-	oper_values = list(Dic.values())
+def volumen(presion, moles, temperatura):
+	if(temperatura>=0 and presion != 0):
+		resultado = ["Volúmen", round((moles*const_gases[0]*temperatura)/presion, 3), "litros"]
+	
+	return resultado
 
-
-def cantidad_fija(p1, p2, v1, v2, t1, t2):
-
-	crear_dic(['Presion1','Presion2','Volumen1','Volumen2','Temperatura1','Temperatura2'], [p1,p2,v1,v2,t1,t2])
+def temperatura(volumen, moles, presion):
+	if(moles != 0):
+		resultado = ["Temperatura", round((presion*volumen)/(const_gases[0]*moles), 3), "kelvin"]
+	
+	return resultado
